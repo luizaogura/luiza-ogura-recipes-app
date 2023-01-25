@@ -33,6 +33,7 @@ function LoginProvider({ children }) {
     user,
     handleChange,
     isDisabled,
+    setIsDisabled,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [user]);
 
