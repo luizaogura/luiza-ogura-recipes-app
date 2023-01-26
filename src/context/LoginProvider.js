@@ -3,39 +3,31 @@ import PropTypes from 'prop-types';
 import LoginContext from './LoginContext';
 
 function LoginProvider({ children }) {
-  const [user, setUser] = useState([{
-    email: '',
-    password: '',
-  }]);
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const handleChange = ({ name, value }) => {
-    setUser({
-      [name]: value,
-    });
-    // const { email, password } = user;
-    // console.log(email);
-    // const re = /\S+@\S+\.\S+/;
-    // const result = re.test(email);
-    // if (email.length > 0 && result === true && password.length > 0) {
-    //   setIsDisabled(false);
-    // } else {
-    //   setIsDisabled(true);
-    // }
-  };
 
   useEffect(() => {
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const loginValidation = ({ email, password }) => {
+    const re = /\S+@\S+\.\S+/;
+    const result = re.test(email);
+    const LENGTH_SIX = 6;
+    setIsDisabled(!(result === true && password.length > LENGTH_SIX));
+  };
+
+  const localStorageSave = (email) => {
+    const response = JSON.stringify({ email });
+    localStorage.setItem('user', response);
+  };
+
   const values = useMemo(() => ({
-    user,
-    handleChange,
     isDisabled,
-    setIsDisabled,
+    loginValidation,
+    localStorageSave,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [user]);
+  }), [isDisabled]);
 
   return (
     <LoginContext.Provider value={ values }>
