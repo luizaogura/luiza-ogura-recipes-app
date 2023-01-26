@@ -79,11 +79,12 @@ function Header() {
               src={ searchIcon }
               alt="searchIcon"
             />
-            { visivelSearchBar && (
-              <SearchBar />
-            )}
           </button>
         )}
+        { visivelSearchBar && (
+          <SearchBar />
+        )}
+
       </div>
 
     </header>
