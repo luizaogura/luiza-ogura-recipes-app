@@ -72,12 +72,12 @@ function Header() {
 
           <button
             type="button"
-            data-testid="search-top-btn"
             onClick={ handleChange }
           >
             <img
               src={ searchIcon }
               alt="searchIcon"
+              data-testid="search-top-btn"
             />
           </button>
         )}
