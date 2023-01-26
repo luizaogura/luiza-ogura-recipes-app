@@ -5,3 +5,5 @@ function useTitle(initialTitle) {
   document.title = title;
   return setTitle;
 }
+
+export default useTitle;
