@@ -50,7 +50,7 @@ function SearchBar() {
           data-testid="name-search-radio"
           type="radio"
           name="typeSearch"
-          value="Name"
+          value="name"
           onChange={ handleChange }
         />
         Name
@@ -62,7 +62,7 @@ function SearchBar() {
           data-testid="first-letter-search-radio"
           type="radio"
           name="typeSearch"
-          value="First letter"
+          value="first letter"
           onChange={ handleChange }
         />
         First letter
