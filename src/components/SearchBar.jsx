@@ -10,9 +10,6 @@ function SearchBar() {
   const { fetchingMeal, fetchingCocktail } = useContext(FetchContext);
   const location = useLocation();
 
-  useEffect(() => {
-  }, []);
-
   const handleChange = ({ target: { name, value } }) => {
     setSearchParams({
       ...searchParams,
