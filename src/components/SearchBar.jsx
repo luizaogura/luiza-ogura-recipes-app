@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import FetchContext from '../context/FetchContext';
 
 function SearchBar() {
@@ -6,7 +7,8 @@ function SearchBar() {
     searchInput: '',
     typeSearch: '',
   });
-  const { requestFetch } = useContext(FetchContext);
+  const { fetchingMeal, fetchingCocktail } = useContext(FetchContext);
+  const location = useLocation();
 
   useEffect(() => {
   }, []);
@@ -19,7 +21,18 @@ function SearchBar() {
   };
 
   const fetchSubmit = () => {
-    requestFetch(searchParams);
+    switch (location.pathname) {
+    case '/meals':
+      fetchingMeal(searchParams);
+      break;
+    case '/drinks':
+      fetchingCocktail(searchParams);
+      break;
+    default:
+      console.log(
+        'Favor renderizar apenas em /meals ou /drinks',
+      );
+    }
   };
 
   return (
@@ -50,7 +63,7 @@ function SearchBar() {
           data-testid="name-search-radio"
           type="radio"
           name="typeSearch"
-          value="Name"
+          value="name"
           onChange={ handleChange }
         />
         Name
@@ -62,7 +75,7 @@ function SearchBar() {
           data-testid="first-letter-search-radio"
           type="radio"
           name="typeSearch"
-          value="First letter"
+          value="first letter"
           onChange={ handleChange }
         />
         First letter
