@@ -1,41 +1,76 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import FetchContext from './FetchContext';
-import useFetchIngrMeal from '../hooks/useFetchIngrMeal';
-import useFetchNameMeal from '../hooks/useFetchNameMeal';
+import useFetch from '../hooks/useFetch';
 
 function FetchProvider({ children }) {
-  const { makeFetchIngr } = useFetchIngrMeal();
-  const { makeFetchName } = useFetchNameMeal();
-  // const [header, setHeader] = useState('');
+  const { errors, isLoading, makeFetch } = useFetch();
+  const [dataMealsIngredient, setDataMealsIngredient] = useState({});
+  const [dataMealsName, setDataMealsName] = useState({});
+  const [dataMealsFirstLetter, setDataMealsFirstLetter] = useState({});
 
-  useEffect(() => {
+  const fetchingMeal = async ({ searchInput, typeSearch }) => {
+    const urlIngredient = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+    const urlName = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`;
+    const urlFirstLetter = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const requestFetch = async ({ searchInput, typeSearch }) => {
-    if (typeSearch === 'ingredient') {
-      await makeFetchIngr(searchInput);
-      // console.log(ingredients);
+    switch (typeSearch) {
+    case 'ingredient': {
+      const dataIngredient = await makeFetch(urlIngredient);
+      setDataMealsIngredient(dataIngredient);
+      break;
     }
-    if (typeSearch === 'name') {
-      await makeFetchName(searchInput);
-      // console.log(ingredientsName);
+    case 'name': {
+      const dataName = await makeFetch(urlName);
+      setDataMealsName(dataName);
+      break;
     }
+    case 'first letter': {
+      if (searchInput.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      const dataFirstLetter = await makeFetch(urlFirstLetter);
+      setDataMealsFirstLetter(dataFirstLetter);
+      break;
+    }
+    default:
+      makeFetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    }
+  };
 
-    if (typeSearch === 'first letter' && searchInput.length === 1) {
-      await makeFetchName(searchInput);
-      // console.log(ingredientsName);
-    }
-    if (typeSearch === 'first letter' && searchInput.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
+  const fetchingCocktail = (searchParams) => {
+    const urlIngredient = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchParams.searchInput}`;
+    const urlName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchParams.searchInput}`;
+    const urlFirstLetter = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchParams.searchInput}`;
+
+    switch (searchParams.typeSearch) {
+    case 'ingredient':
+      makeFetch(urlIngredient);
+      break;
+    case 'name':
+      makeFetch(urlName);
+      break;
+    case 'first letter':
+      if (searchParams.searchInput.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      makeFetch(urlFirstLetter);
+      break;
+    default:
+      makeFetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
   };
 
   const values = useMemo(() => ({
-    requestFetch,
-  }), []);
+    errors,
+    isLoading,
+    fetchingMeal,
+    fetchingCocktail,
+    dataMealsIngredient,
+    dataMealsName,
+    dataMealsFirstLetter,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [errors, isLoading, dataMealsIngredient]);
 
   return (
     <FetchContext.Provider value={ values }>

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import FetchContext from '../context/FetchContext';
 
 function SearchBar() {
@@ -6,10 +7,8 @@ function SearchBar() {
     searchInput: '',
     typeSearch: '',
   });
-  const { requestFetch } = useContext(FetchContext);
-
-  useEffect(() => {
-  }, []);
+  const { fetchingMeal, fetchingCocktail } = useContext(FetchContext);
+  const location = useLocation();
 
   const handleChange = ({ target: { name, value } }) => {
     setSearchParams({
@@ -19,7 +18,18 @@ function SearchBar() {
   };
 
   const fetchSubmit = () => {
-    requestFetch(searchParams);
+    switch (location.pathname) {
+    case '/meals':
+      fetchingMeal(searchParams);
+      break;
+    case '/drinks':
+      fetchingCocktail(searchParams);
+      break;
+    default:
+      console.log(
+        'Favor renderizar apenas em /meals ou /drinks',
+      );
+    }
   };
 
   return (
