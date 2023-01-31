@@ -9,6 +9,8 @@ import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import RecipeInProgress from './pages/RecipeInProgress';
+import Recipes from './pages/Recipes';
+import RecipesProvider from './context/RecipesProvider';
 
 function App() {
   return (
