@@ -10,6 +10,7 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Recipes from './pages/Recipes';
 import RecipesProvider from './context/RecipesProvider';
+import RecipeInProgress from './pages/RecipesInProgress';
 
 function App() {
   return (
