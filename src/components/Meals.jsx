@@ -1,48 +1,46 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Footer from './Footer';
 import FetchContext from '../context/FetchContext';
 import useFetch from '../hooks/useFetch';
 
-function Drinks() {
+function Meals() {
   const { isLoading, errors } = useContext(FetchContext);
   const { makeFetch } = useFetch();
-  const [slicedCocktails, setSlicedCocktails] = useState({});
+  const [slicedMeals, setSlicedMeals] = useState({});
 
   useEffect(() => {
     async function requestFetch() {
       const LENGTH_TWELVE = 12;
-      const data = await makeFetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-      const twelveCocktails = data.drinks.splice(0, LENGTH_TWELVE);
-      setSlicedCocktails(twelveCocktails);
+      const data = await makeFetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
+      setSlicedMeals(twelveMeals);
     }
     requestFetch();
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <div>
-      <Header />
       {
         isLoading && (
           <p>Loading...</p>
         )
       }
       {
-        slicedCocktails.length > 0 && (
-          slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
-            <card data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
+        slicedMeals.length > 0 && (
+          slicedMeals.map(({ strMealThumb, strMeal }, index) => (
+            <div data-testid={ `${index}-recipe-card` } key={ `${strMeal}${index}` }>
               <img
-                src={ strDrinkThumb }
-                alt={ strDrink }
+                src={ strMealThumb }
+                alt={ strMeal }
                 data-testid={ `${index}-card-img` }
               />
               <p
                 data-testid={ `${index}-card-name` }
               >
-                {strDrink}
+                {strMeal}
               </p>
-            </card>)))
+            </div>)))
       }
       {
         errors && (
@@ -54,4 +52,4 @@ function Drinks() {
   );
 }
 
-export default Drinks;
+export default Meals;

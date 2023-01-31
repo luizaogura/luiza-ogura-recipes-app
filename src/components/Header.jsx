@@ -63,7 +63,7 @@ function Header() {
           <Link to="/profile">
             <img
               src={ profileIcon }
-              alt="drinkIcon"
+              alt="profileIcon"
               data-testid="profile-top-btn"
             />
           </Link>
