@@ -20,9 +20,7 @@ function Profile() {
 
   const handleLogoutClick = () => {
     history.push('/');
-    const user = JSON.parse(localStorage.getItem('user'));
-    delete user.email;
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.clear();
   };
 
   return (
