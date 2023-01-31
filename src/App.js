@@ -16,6 +16,7 @@ function App() {
   return (
     <LoginProvider>
       <FetchProvider>
+      <RecipesProvider>
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Meals } />
@@ -34,6 +35,8 @@ function App() {
             component={ RecipeInProgress }
           />
         </Switch>
+
+          </RecipesProvider>
       </FetchProvider>
     </LoginProvider>
   );
