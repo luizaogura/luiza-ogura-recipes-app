@@ -64,7 +64,7 @@ function Header() {
             <img
               data-testid="profile-top-btn"
               src={ profileIcon }
-              alt="profileIcon"
+              alt="drinkIcon"
             />
           </Link>
         )}
