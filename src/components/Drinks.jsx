@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import FetchContext from '../context/FetchContext';
 import useFetch from '../hooks/useFetch';
 
@@ -22,7 +20,6 @@ function Drinks() {
 
   return (
     <div>
-      <Header />
       {
         isLoading && (
           <p>Loading...</p>
@@ -31,7 +28,7 @@ function Drinks() {
       {
         slicedCocktails.length > 0 && (
           slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
-            <card data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
+            <div data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
@@ -42,14 +39,13 @@ function Drinks() {
               >
                 {strDrink}
               </p>
-            </card>)))
+            </div>)))
       }
       {
         errors && (
           <p>Erro Fatal!!! Seu computador se autodestruirá em 5 segundos!!</p>
         )
       }
-      <Footer />
     </div>
   );
 }
