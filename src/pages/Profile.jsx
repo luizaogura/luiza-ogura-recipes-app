@@ -6,9 +6,11 @@ import Header from '../components/Header';
 
 function Profile() {
   const history = useHistory();
-  const response = localStorage.getItem('user');
-  const data = JSON.parse(response).email;
-  console.log(data);
+  function getEmail() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const data = user && Object.values(user)[0];
+    return data;
+  }
 
   const doneRecepiesClick = () => {
     history.push('/done-recipes');
@@ -29,7 +31,7 @@ function Profile() {
       <p
         data-testid="profile-email"
       >
-        {data}
+        {getEmail()}
       </p>
       <Button
         type="button"
