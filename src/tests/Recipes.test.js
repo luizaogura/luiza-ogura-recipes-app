@@ -2,37 +2,43 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import { createMemoryHistory } from 'history';
 import { renderWithRouter } from './helpers/renderWithRouter';
 import Recipes from '../pages/Recipes';
-import { createMemoryHistory } from 'history';
+import App from '../App';
 
-  test('Tem os botões de categoria', async () => {
-    const categoryBeef = await screen.findByRole('button', { name: /beef/i });
-    expect(categoryBeef).toBeInTheDocument();
-    const categoryBreakfast = await screen.findByRole('button', { name: /breakfast/i });
-    expect(categoryBreakfast).toBeInTheDocument();
-    const categoryChicken = await screen.findByRole('button', { name: /chicken/i });
-    expect(categoryChicken).toBeInTheDocument();
-    const categoryDessert = await screen.findByRole('button', { name: /dessert/i });
-    expect(categoryDessert).toBeInTheDocument();
-    const categoryGoat = await screen.findByRole('button', { name: /goat/i });
-    expect(categoryGoat).toBeInTheDocument();
+test('Tem os botões de categoria', async () => {
+  const categoryBeef = await screen.findByRole('button', { name: /beef/i });
+  expect(categoryBeef).toBeInTheDocument();
+  const categoryBreakfast = await screen.findByRole('button', {
+    name: /breakfast/i,
   });
-
-    renderWithRouter(
-      <Recipes />,
-      initialEntries = ['/meals'],
-      history = createMemoryHistory({ initialEntries }),
-    );
-    const drinkIconEl = screen.getByRole('img', { name: /drinkicon/i });
-    expect(drinkIconEl).toBeInTheDocument();
-    userEvent.click(drinkIconEl);
-
-    const mealsIconEl = screen.getByRole('img', { name: /mealicon/i });
-    expect(mealsIconEl).toBeInTheDocument();
-    userEvent.click(mealsIconEl);
+  expect(categoryBreakfast).toBeInTheDocument();
+  const categoryChicken = await screen.findByRole('button', {
+    name: /chicken/i,
   });
+  expect(categoryChicken).toBeInTheDocument();
+  const categoryDessert = await screen.findByRole('button', {
+    name: /dessert/i,
+  });
+  expect(categoryDessert).toBeInTheDocument();
+  const categoryGoat = await screen.findByRole('button', { name: /goat/i });
+  expect(categoryGoat).toBeInTheDocument();
 });
+
+renderWithRouter(
+  <Recipes />,
+  (initialEntries = ['/meals']),
+  (history = createMemoryHistory({ initialEntries })),
+);
+const drinkIconEl = screen.getByRole('img', { name: /drinkicon/i });
+expect(drinkIconEl).toBeInTheDocument();
+userEvent.click(drinkIconEl);
+
+const mealsIconEl = screen.getByRole('img', { name: /mealicon/i });
+expect(mealsIconEl).toBeInTheDocument();
+
+userEvent.click(mealsIconEl);
 
 describe('Verificar se no Recipes na rota Drinks...', () => {
   beforeEach(() => {
@@ -42,9 +48,13 @@ describe('Verificar se no Recipes na rota Drinks...', () => {
     });
   });
   test('Tem os botões de categoria', async () => {
-    const categoryOrdinaryDrink = await screen.findByRole('button', { name: /ordinary/i });
+    const categoryOrdinaryDrink = await screen.findByRole('button', {
+      name: /ordinary/i,
+    });
     expect(categoryOrdinaryDrink).toBeInTheDocument();
-    const categoryCocktail = await screen.findByRole('button', { name: /cocktail/i });
+    const categoryCocktail = await screen.findByRole('button', {
+      name: /cocktail/i,
+    });
     expect(categoryCocktail).toBeInTheDocument();
     const categoryShake = await screen.findByRole('button', { name: /shake/i });
     expect(categoryShake).toBeInTheDocument();
