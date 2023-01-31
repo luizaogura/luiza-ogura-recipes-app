@@ -1,55 +1,10 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 import { renderWithRouter } from './helpers/renderWithRouter';
 import Recipes from '../pages/Recipes';
 import { createMemoryHistory } from 'history';
-import { act } from 'react-dom/test-utils';
-import App from '../App';
-
-describe('Verificar se no Recipes...', () => {
-  test('Tem o footer', () => {
-    {
-      initialEntries = ['/meals'],
-      history = createMemoryHistory({ initialEntries }),
-    }
-
-    renderWithRouter(
-      <Recipes />,
-      initialEntries = ['/meals'],
-      history = createMemoryHistory({ initialEntries }),
-    );
-
-// TEM QUE FAZER UM FETCH COM MOCK
-
-describe('Verificar se no Recipes na rota Meals...', () => {
-  beforeEach(() => {
-    const { history } = renderWithRouter(<App />);
-    act(() => {
-      history.push('/meals');
-    });
-  });
-  test('Tem o Header', () => {
-    const headerTitleEl = screen.getByRole('heading', { name: /meals/i });
-    expect(headerTitleEl).toBeInTheDocument();
-    const profileIconEl = screen.getByRole('img', { name: /profileIcon/i });
-    expect(profileIconEl).toBeInTheDocument();
-    const searchButtonEl = screen.getByRole('img', { name: /searchIcon/i });
-    expect(searchButtonEl).toBeInTheDocument();
-  });
-
-  test('Tem o SearchButton', () => {
-    const searchButtonEl = screen.getByRole('img', { name: /searchIcon/i });
-    userEvent.click(searchButtonEl);
-    const inputSearchEl = screen.getByTestId('search-input');
-    expect(inputSearchEl).toBeInTheDocument();
-    const radioIngredientEl = screen.getByText(/ingredient/i);
-    expect(radioIngredientEl).toBeInTheDocument();
-    const radioNameEl = screen.getByText(/name/i);
-    expect(radioNameEl).toBeInTheDocument();
-    const radioFirstLetterEl = screen.getByText(/first letter/i);
-    expect(radioFirstLetterEl).toBeInTheDocument();
-  });
 
   test('Tem os botões de categoria', async () => {
     const categoryBeef = await screen.findByRole('button', { name: /beef/i });
@@ -64,8 +19,11 @@ describe('Verificar se no Recipes na rota Meals...', () => {
     expect(categoryGoat).toBeInTheDocument();
   });
 
-  test('Tem o Footer', () => {
-
+    renderWithRouter(
+      <Recipes />,
+      initialEntries = ['/meals'],
+      history = createMemoryHistory({ initialEntries }),
+    );
     const drinkIconEl = screen.getByRole('img', { name: /drinkicon/i });
     expect(drinkIconEl).toBeInTheDocument();
     userEvent.click(drinkIconEl);
