@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Footer from './Footer';
 import FetchContext from '../context/FetchContext';
 import useFetch from '../hooks/useFetch';
 
@@ -47,7 +46,6 @@ function Meals() {
           <p>Erro Fatal!!! Seu computador se autodestruirá em 5 segundos!!</p>
         )
       }
-      <Footer />
     </div>
   );
 }
