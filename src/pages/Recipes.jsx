@@ -11,13 +11,15 @@ import useFetch from '../hooks/useFetch';
 function Recipes() {
   const [isLoading, setIsLoading] = useState(false);
   const [mealsCategory, setMealsCategory] = useState([]);
+  const [drinksCategory, setDrinksCategory] = useState([]);
+
   const { makeFetch } = useFetch();
 
   const location = useLocation();
   const { pathname } = location;
   const {
     // mealsCategory,
-    drinksCategory,
+    // drinksCategory,
     handleClick,
     handleClickAll,
   } = useContext(RecipesContext);
@@ -32,6 +34,14 @@ function Recipes() {
       setIsLoading(false);
     }
     fetchingRecipesMeals('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+
+    const fetchingRecipesDrinks = async (url) => {
+      const LENGTH_FIVE = 5;
+      const data = await makeFetch(url);
+      const fiveDrinks = data.drinks.splice(0, LENGTH_FIVE);
+      setDrinksCategory([...fiveDrinks]);
+    };
+    fetchingRecipesDrinks('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
   }, []);
 
   return (
@@ -67,13 +77,16 @@ function Recipes() {
               {strCategory}
             </button>))
       }
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ handleClickAll }
-      >
-        All
-      </button>
+      {
+        (mealsCategory.length > 0 || drinksCategory.length > 0) && (
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ handleClickAll }
+          >
+            All
+          </button>)
+      }
       {
         pathname.includes('meals') ? <Meals /> : <Drinks />
       }

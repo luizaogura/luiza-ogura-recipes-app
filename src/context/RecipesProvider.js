@@ -6,10 +6,8 @@ import useFetch from '../hooks/useFetch';
 function RecipesProvider({ children }) {
   const { makeFetch } = useFetch();
   // const [mealsCategory, setMealsCategory] = useState([]);
-  const [drinksCategory, setDrinksCategory] = useState([]);
+  // const [drinksCategory, setDrinksCategory] = useState([]);
   const [filteredMealsCategory, setFilteredMealsCategory] = useState([]);
-  const [saveMealsCategory, setSaveMealsCategory] = useState('');
-  const [saveCocktailsCategory, setSaveCocktailsCategory] = useState('');
 
   const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
 
@@ -21,13 +19,13 @@ function RecipesProvider({ children }) {
     //   setMealsCategory(fiveMeals);
     // }
     // fetchingRecipesMeals('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-    const fetchingRecipesDrinks = async (url) => {
-      const LENGTH_FIVE = 5;
-      const data = await makeFetch(url);
-      const fiveDrinks = data.drinks.splice(0, LENGTH_FIVE);
-      setDrinksCategory([...fiveDrinks]);
-    };
-    fetchingRecipesDrinks('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    // const fetchingRecipesDrinks = async (url) => {
+    //   const LENGTH_FIVE = 5;
+    //   const data = await makeFetch(url);
+    //   const fiveDrinks = data.drinks.splice(0, LENGTH_FIVE);
+    //   setDrinksCategory([...fiveDrinks]);
+    // };
+    // fetchingRecipesDrinks('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,15 +39,12 @@ function RecipesProvider({ children }) {
       const data = await makeFetch(urlMealsCategory);
       const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
       setFilteredMealsCategory(twelveMeals);
-      setSaveMealsCategory(category);
       break;
     }
     case 'categoryButtonDrinks': {
       const data = await makeFetch(urlDrinksCategory);
       const twelveCocktails = data.drinks.splice(0, LENGTH_TWELVE);
       setFilteredCocktailsCategory(twelveCocktails);
-      setSaveCocktailsCategory(category);
-
       break;
     }
     default:
@@ -64,19 +59,17 @@ function RecipesProvider({ children }) {
 
   const values = useMemo(() => ({
     // mealsCategory,
-    drinksCategory,
+    // drinksCategory,
     handleClick,
     filteredMealsCategory,
     filteredCocktailsCategory,
-    saveMealsCategory,
-    saveCocktailsCategory,
     handleClickAll,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
     // mealsCategory,
-    drinksCategory,
-    filteredMealsCategory, filteredCocktailsCategory, saveMealsCategory,
-    saveCocktailsCategory,
+    // drinksCategory,
+    filteredMealsCategory,
+    filteredCocktailsCategory,
   ]);
 
   return (

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import Footer from './Footer';
 import FetchContext from '../context/FetchContext';
 import RecipesContext from '../context/RecipesContext';
 import useFetch from '../hooks/useFetch';
@@ -10,7 +9,6 @@ function Drinks() {
   const [slicedCocktails, setSlicedCocktails] = useState({});
   const {
     filteredCocktailsCategory,
-    saveCocktailsCategory,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -25,7 +23,7 @@ function Drinks() {
   }, []);
 
   return (
-    <div data-testid={ `${saveCocktailsCategory}-category-filter` }>
+    <div>
       {
         isLoading && (
           <p>Loading...</p>
@@ -36,14 +34,12 @@ function Drinks() {
           ? filteredCocktailsCategory.map(({ strDrink, strDrinkThumb, idDrink }) => (
             <div
               key={ idDrink }
-              data-testid={ `${saveCocktailsCategory}-category-filter` }
             >
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                data-testid={ `${saveCocktailsCategory}-category-filter` }
               />
-              <p data-testid={ `${saveCocktailsCategory}-category-filter` }>{strDrink}</p>
+              <p>{strDrink}</p>
             </div>
           ))
           : slicedCocktails.length > 0 && (

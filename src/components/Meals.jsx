@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import Footer from './Footer';
 import FetchContext from '../context/FetchContext';
 import RecipesContext from '../context/RecipesContext';
 import useFetch from '../hooks/useFetch';
@@ -10,8 +9,6 @@ function Meals() {
   const [slicedMeals, setSlicedMeals] = useState({});
   const {
     filteredMealsCategory,
-    saveMealsCategory,
-    // handleClickAll,
   } = useContext(RecipesContext);
   useEffect(() => {
     async function requestFetch() {
@@ -25,7 +22,7 @@ function Meals() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div data-testid={ `${saveMealsCategory}-category-filter` }>
+    <div>
       {
         isLoading && (
           <p>Loading...</p>
@@ -36,14 +33,12 @@ function Meals() {
           ? filteredMealsCategory.map(({ strMeal, strMealThumb, idMeal }) => (
             <div
               key={ idMeal }
-              data-testid={ `${saveMealsCategory}-category-filter` }
             >
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                data-testid={ `${saveMealsCategory}-category-filter` }
               />
-              <p data-testid={ `${saveMealsCategory}-category-filter` }>{strMeal}</p>
+              <p>{strMeal}</p>
             </div>
           )) : slicedMeals.length > 0 && (
             slicedMeals.map(({ strMealThumb, strMeal }, index) => (
