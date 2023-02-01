@@ -17,14 +17,26 @@ function SearchBar() {
     });
   };
 
-  const fetchSubmit = () => {
+  const fetchSubmit = async () => {
     switch (location.pathname) {
-    case '/meals':
-      fetchingMeal(searchParams);
+    case '/meals': {
+      try {
+        const responseApiMeal = await fetchingMeal(searchParams);
+        console.log(responseApiMeal);
+      } catch (err) {
+        console.log(err);
+      }
       break;
-    case '/drinks':
-      fetchingCocktail(searchParams);
+    }
+    case '/drinks': {
+      try {
+        const responseApiDrinks = await fetchingCocktail(searchParams);
+        console.log(responseApiDrinks);
+      } catch (err) {
+        console.log(err);
+      }
       break;
+    }
     default:
       console.log(
         'Favor renderizar apenas em /meals ou /drinks',

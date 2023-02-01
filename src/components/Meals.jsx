@@ -3,7 +3,7 @@ import FetchContext from '../context/FetchContext';
 import useFetch from '../hooks/useFetch';
 
 function Meals() {
-  const { isLoading, errors } = useContext(FetchContext);
+  const { isLoading, errors, searchClick } = useContext(FetchContext);
   const { makeFetch } = useFetch();
   const [slicedMeals, setSlicedMeals] = useState({});
 
@@ -18,6 +18,7 @@ function Meals() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(searchClick);
   return (
     <div>
       {

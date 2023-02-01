@@ -10,6 +10,8 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Recipes from './pages/Recipes';
 import RecipesProvider from './context/RecipesProvider';
+import RecipeDrinkDetails from './pages/RecipeDrinkDetails';
+import RecipeMealDetails from './pages/RecipeMealDetails';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route exact path="/profile" component={ Profile } />
             <Route exact path="/done-recipes" component={ DoneRecipes } />
             <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+            <Route exact path="/meals/:id-da-receita" component={ RecipeMealDetails } />
+            <Route exact path="/drinks/:id-da-receita" component={ RecipeDrinkDetails } />
           </Switch>
         </RecipesProvider>
       </FetchProvider>
