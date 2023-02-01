@@ -1,25 +1,47 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import Drinks from '../components/Drinks';
 import Meals from '../components/Meals';
+import useFetch from '../hooks/useFetch';
 
 function Recipes() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [mealsCategory, setMealsCategory] = useState([]);
+  const { makeFetch } = useFetch();
+
   const location = useLocation();
   const { pathname } = location;
   const {
-    mealsCategory,
+    // mealsCategory,
     drinksCategory,
     handleClick,
     handleClickAll,
   } = useContext(RecipesContext);
 
+  useEffect(() => {
+    async function fetchingRecipesMeals(url) {
+      setIsLoading(true);
+      const LENGTH_FIVE = 5;
+      const data = await makeFetch(url);
+      const fiveMeals = data.meals.splice(0, LENGTH_FIVE);
+      setMealsCategory(fiveMeals);
+      setIsLoading(false);
+    }
+    fetchingRecipesMeals('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  }, []);
+
   return (
     <main>
       <Header />
+      {
+        isLoading && (
+          <p>Loading...</p>
+        )
+      }
       {
         pathname.includes('meals')
           ? mealsCategory.map(({ strCategory }, index) => (

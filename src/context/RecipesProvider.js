@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 import useFetch from '../hooks/useFetch';
 
-function LoginProvider({ children }) {
+function RecipesProvider({ children }) {
   const { makeFetch } = useFetch();
-  const [mealsCategory, setMealsCategory] = useState([]);
+  // const [mealsCategory, setMealsCategory] = useState([]);
   const [drinksCategory, setDrinksCategory] = useState([]);
   const [filteredMealsCategory, setFilteredMealsCategory] = useState([]);
   const [saveMealsCategory, setSaveMealsCategory] = useState('');
@@ -14,13 +14,13 @@ function LoginProvider({ children }) {
   const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
 
   useEffect(() => {
-    async function fetchingRecipesMeals(url) {
-      const LENGTH_FIVE = 5;
-      const data = await makeFetch(url);
-      const fiveMeals = data.meals.splice(0, LENGTH_FIVE);
-      setMealsCategory(fiveMeals);
-    }
-    fetchingRecipesMeals('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    // async function fetchingRecipesMeals(url) {
+    //   const LENGTH_FIVE = 5;
+    //   const data = await makeFetch(url);
+    //   const fiveMeals = data.meals.splice(0, LENGTH_FIVE);
+    //   setMealsCategory(fiveMeals);
+    // }
+    // fetchingRecipesMeals('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const fetchingRecipesDrinks = async (url) => {
       const LENGTH_FIVE = 5;
       const data = await makeFetch(url);
@@ -63,7 +63,7 @@ function LoginProvider({ children }) {
   };
 
   const values = useMemo(() => ({
-    mealsCategory,
+    // mealsCategory,
     drinksCategory,
     handleClick,
     filteredMealsCategory,
@@ -73,7 +73,7 @@ function LoginProvider({ children }) {
     handleClickAll,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
-    mealsCategory,
+    // mealsCategory,
     drinksCategory,
     filteredMealsCategory, filteredCocktailsCategory, saveMealsCategory,
     saveCocktailsCategory,
@@ -86,9 +86,9 @@ function LoginProvider({ children }) {
   );
 }
 
-LoginProvider.propTypes = {
+RecipesProvider.propTypes = {
   children: PropTypes.node,
 
 }.isRequired;
 
-export default LoginProvider;
+export default RecipesProvider;
