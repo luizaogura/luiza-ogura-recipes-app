@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+// import Footer from './Footer';
 import FetchContext from '../context/FetchContext';
 import RecipesContext from '../context/RecipesContext';
 import useFetch from '../hooks/useFetch';
