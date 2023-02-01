@@ -10,35 +10,12 @@ import Meals from '../components/Meals';
 function Recipes() {
   const location = useLocation();
   const { pathname } = location;
-  // const [mealOrDrink, setMealOrDrink] = useState();
   const {
     mealsCategory,
     drinksCategory,
-    // fetchingRecipesMeals,
-    // fetchingRecipesDrinks,
+    handleClick,
+    handleClickAll,
   } = useContext(RecipesContext);
-  // useEffect(() => {
-  // fetchingRecipesMeals();
-  // fetchingRecipesDrinks('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-  // }, []);
-
-  // useEffect(() => {
-  //   const comparativeRoutes = () => {
-  //     switch (location.pathname) {
-  //     case '/meals':
-  //       setMealOrDrink(true);
-  //       break;
-  //     case '/drinks':
-  //       setMealOrDrink(false);
-  //       break;
-  //     default:
-  //       console.log(
-  //         'Favor renderizar apenas em /meals ou /drinks',
-  //       );
-  //     }
-  //   };
-  //   comparativeRoutes();
-  // }, [location.pathname]);
 
   return (
     <main>
@@ -50,7 +27,9 @@ function Recipes() {
               type="button"
               key={ index }
               data-testid={ `${strCategory}-category-filter` }
-              // onClick={}
+              onClick={ ({ target: { name, id } }) => handleClick(name, id) }
+              name="categoryButtonMeals"
+              id={ strCategory }
             >
               {strCategory}
             </button>))
@@ -59,11 +38,20 @@ function Recipes() {
               type="button"
               key={ index }
               data-testid={ `${strCategory}-category-filter` }
-              // onClick={}
+              onClick={ ({ target: { name, id } }) => handleClick(name, id) }
+              name="categoryButtonDrinks"
+              id={ strCategory }
             >
               {strCategory}
             </button>))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickAll }
+      >
+        All
+      </button>
       {
         pathname.includes('meals') ? <Meals /> : <Drinks />
       }

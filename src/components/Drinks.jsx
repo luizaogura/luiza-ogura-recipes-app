@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FetchContext from '../context/FetchContext';
+import RecipesContext from '../context/RecipesContext';
 import useFetch from '../hooks/useFetch';
 
 function Drinks() {
   const { isLoading, errors } = useContext(FetchContext);
   const { makeFetch } = useFetch();
   const [slicedCocktails, setSlicedCocktails] = useState({});
+  const {
+    filteredCocktailsCategory,
+    saveCocktailsCategory,
+  } = useContext(RecipesContext);
 
   useEffect(() => {
     async function requestFetch() {
@@ -19,27 +24,41 @@ function Drinks() {
   }, []);
 
   return (
-    <div>
+    <div data-testid={ `${saveCocktailsCategory}-category-filter` }>
       {
         isLoading && (
           <p>Loading...</p>
         )
       }
       {
-        slicedCocktails.length > 0 && (
-          slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
-            <div data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
+        filteredCocktailsCategory.length > 0
+          ? filteredCocktailsCategory.map(({ strDrink, strDrinkThumb, idDrink }) => (
+            <div
+              key={ idDrink }
+              data-testid={ `${saveCocktailsCategory}-category-filter` }
+            >
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                data-testid={ `${index}-card-img` }
+                data-testid={ `${saveCocktailsCategory}-category-filter` }
               />
-              <p
-                data-testid={ `${index}-card-name` }
-              >
-                {strDrink}
-              </p>
-            </div>)))
+              <p data-testid={ `${saveCocktailsCategory}-category-filter` }>{strDrink}</p>
+            </div>
+          ))
+          : slicedCocktails.length > 0 && (
+            slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
+              <div data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
+                <img
+                  src={ strDrinkThumb }
+                  alt={ strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                >
+                  {strDrink}
+                </p>
+              </div>)))
       }
       {
         errors && (

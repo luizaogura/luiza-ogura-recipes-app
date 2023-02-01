@@ -7,6 +7,11 @@ function LoginProvider({ children }) {
   const { makeFetch } = useFetch();
   const [mealsCategory, setMealsCategory] = useState([]);
   const [drinksCategory, setDrinksCategory] = useState([]);
+  const [filteredMealsCategory, setFilteredMealsCategory] = useState([]);
+  const [saveMealsCategory, setSaveMealsCategory] = useState('');
+  const [saveCocktailsCategory, setSaveCocktailsCategory] = useState('');
+
+  const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
 
   useEffect(() => {
     async function fetchingRecipesMeals(url) {
@@ -26,11 +31,53 @@ function LoginProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = async (name, category) => {
+    const LENGTH_TWELVE = 12;
+    const urlMealsCategory = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+    const urlDrinksCategory = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+
+    switch (name) {
+    case 'categoryButtonMeals': {
+      const data = await makeFetch(urlMealsCategory);
+      const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
+      setFilteredMealsCategory(twelveMeals);
+      setSaveMealsCategory(category);
+      break;
+    }
+    case 'categoryButtonDrinks': {
+      const data = await makeFetch(urlDrinksCategory);
+      const twelveCocktails = data.drinks.splice(0, LENGTH_TWELVE);
+      setFilteredCocktailsCategory(twelveCocktails);
+      setSaveCocktailsCategory(category);
+
+      break;
+    }
+    default:
+      console.log('Ação de clique desconhecida');
+    }
+  };
+
+  const handleClickAll = () => {
+    setFilteredMealsCategory([]);
+    setFilteredCocktailsCategory([]);
+  };
+
   const values = useMemo(() => ({
     mealsCategory,
     drinksCategory,
+    handleClick,
+    filteredMealsCategory,
+    filteredCocktailsCategory,
+    saveMealsCategory,
+    saveCocktailsCategory,
+    handleClickAll,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [mealsCategory, drinksCategory]);
+  }), [
+    mealsCategory,
+    drinksCategory,
+    filteredMealsCategory, filteredCocktailsCategory, saveMealsCategory,
+    saveCocktailsCategory,
+  ]);
 
   return (
     <RecipesContext.Provider value={ values }>
