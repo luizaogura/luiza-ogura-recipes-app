@@ -11,6 +11,8 @@ function RecipesProvider({ children }) {
 
   const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
 
+  const [isChecked, setIsChecked] = useState(false);
+
   useEffect(() => {
     // async function fetchingRecipesMeals(url) {
     //   const LENGTH_FIVE = 5;
@@ -33,22 +35,29 @@ function RecipesProvider({ children }) {
     const LENGTH_TWELVE = 12;
     const urlMealsCategory = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
     const urlDrinksCategory = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-
-    switch (name) {
-    case 'categoryButtonMeals': {
-      const data = await makeFetch(urlMealsCategory);
-      const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
-      setFilteredMealsCategory(twelveMeals);
-      break;
-    }
-    case 'categoryButtonDrinks': {
-      const data = await makeFetch(urlDrinksCategory);
-      const twelveCocktails = data.drinks.slice(0, LENGTH_TWELVE);
-      setFilteredCocktailsCategory(twelveCocktails);
-      break;
-    }
-    default:
-      console.log('Ação de clique desconhecida');
+    if (isChecked === false) {
+      switch (name) {
+      case 'categoryButtonMeals': {
+        const data = await makeFetch(urlMealsCategory);
+        const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
+        setFilteredMealsCategory(twelveMeals);
+        setIsChecked(true);
+        break;
+      }
+      case 'categoryButtonDrinks': {
+        const data = await makeFetch(urlDrinksCategory);
+        const twelveCocktails = data.drinks.slice(0, LENGTH_TWELVE);
+        setFilteredCocktailsCategory(twelveCocktails);
+        setIsChecked(true);
+        break;
+      }
+      default:
+        console.log('Ação de clique desconhecida');
+      }
+    } else {
+      setFilteredMealsCategory([]);
+      setFilteredCocktailsCategory([]);
+      setIsChecked(false);
     }
   };
 
@@ -64,12 +73,14 @@ function RecipesProvider({ children }) {
     filteredMealsCategory,
     filteredCocktailsCategory,
     handleClickAll,
+    isChecked,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
     // mealsCategory,
     // drinksCategory,
     filteredMealsCategory,
     filteredCocktailsCategory,
+    isChecked,
   ]);
 
   return (
