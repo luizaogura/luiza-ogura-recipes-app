@@ -10,8 +10,8 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Recipes from './pages/Recipes';
 import RecipesProvider from './context/RecipesProvider';
-import RecipeDrinkDetails from './pages/RecipeDrinkDetails';
-import RecipeMealDetails from './pages/RecipeMealDetails';
+import RecipeDetails from './components/RecipeDetails';
+import RecipeInProgress from './pages/RecipesInProgress';
 
 function App() {
   return (
@@ -25,13 +25,30 @@ function App() {
             <Route exact path="/profile" component={ Profile } />
             <Route exact path="/done-recipes" component={ DoneRecipes } />
             <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-            <Route exact path="/meals/:id-da-receita" component={ RecipeMealDetails } />
-            <Route exact path="/drinks/:id-da-receita" component={ RecipeDrinkDetails } />
+            <Route
+              exact
+              path="/meals/:id"
+              component={ RecipeDetails }
+            />
+            <Route
+              exact
+              path="/drinks/:id"
+              component={ RecipeDetails }
+            />
+            <Route
+              exact
+              path="/meals/:id/in-progress"
+              component={ RecipeInProgress }
+            />
+            <Route
+              exact
+              path="/drinks/:id/in-progress"
+              component={ RecipeInProgress }
+            />
           </Switch>
         </RecipesProvider>
       </FetchProvider>
     </LoginProvider>
-
   );
 }
 
