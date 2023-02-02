@@ -1,48 +1,73 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import Drinks from '../components/Drinks';
 import Meals from '../components/Meals';
+import useFetch from '../hooks/useFetch';
 
 function Recipes() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [slicedMeals, setSlicedMeals] = useState([]);
+  const [slicedCocktails, setSlicedCocktails] = useState([]);
+
+  const [mealsCategory, setMealsCategory] = useState([]);
+  const [drinksCategory, setDrinksCategory] = useState([]);
+
+  const { makeFetch } = useFetch();
+
   const location = useLocation();
   const { pathname } = location;
-  // const [mealOrDrink, setMealOrDrink] = useState();
   const {
-    mealsCategory,
-    drinksCategory,
-    // fetchingRecipesMeals,
-    // fetchingRecipesDrinks,
+    handleClick,
+    handleClickAll,
   } = useContext(RecipesContext);
-  // useEffect(() => {
-  // fetchingRecipesMeals();
-  // fetchingRecipesDrinks('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-  // }, []);
 
-  // useEffect(() => {
-  //   const comparativeRoutes = () => {
-  //     switch (location.pathname) {
-  //     case '/meals':
-  //       setMealOrDrink(true);
-  //       break;
-  //     case '/drinks':
-  //       setMealOrDrink(false);
-  //       break;
-  //     default:
-  //       console.log(
-  //         'Favor renderizar apenas em /meals ou /drinks',
-  //       );
-  //     }
-  //   };
-  //   comparativeRoutes();
-  // }, [location.pathname]);
+  useEffect(() => {
+    async function fetchingRecipesCategory(url) {
+      setIsLoading(true);
+      const LENGTH_FIVE = 5;
+      const data = await makeFetch(url);
+      if (url.includes('meal')) {
+        const fiveMeals = data.meals.slice(0, LENGTH_FIVE);
+        setMealsCategory(fiveMeals);
+      } else {
+        const fiveDrinks = data.drinks.slice(0, LENGTH_FIVE);
+        setDrinksCategory(fiveDrinks);
+      }
+      setIsLoading(false);
+    }
+
+    fetchingRecipesCategory('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    fetchingRecipesCategory('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    async function fetchingStartRecipes(url) {
+      setIsLoading(true);
+      const LENGTH_TWELVE = 12;
+      const data = await makeFetch(url);
+      if (url.includes('meal')) {
+        const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
+        setSlicedMeals(twelveMeals);
+      } else {
+        const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
+        setSlicedCocktails(twelveMeals);
+      }
+      setIsLoading(false);
+    }
+    fetchingStartRecipes('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    fetchingStartRecipes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  }, []);
 
   return (
     <main>
       <Header />
+      {
+        isLoading && (
+          <p>Loading...</p>
+        )
+      }
       {
         pathname.includes('meals')
           ? mealsCategory.map(({ strCategory }, index) => (
@@ -50,7 +75,9 @@ function Recipes() {
               type="button"
               key={ index }
               data-testid={ `${strCategory}-category-filter` }
-              // onClick={}
+              onClick={ ({ target: { name, id } }) => handleClick(name, id) }
+              name="categoryButtonMeals"
+              id={ strCategory }
             >
               {strCategory}
             </button>))
@@ -59,13 +86,27 @@ function Recipes() {
               type="button"
               key={ index }
               data-testid={ `${strCategory}-category-filter` }
-              // onClick={}
+              onClick={ ({ target: { name, id } }) => handleClick(name, id) }
+              name="categoryButtonDrinks"
+              id={ strCategory }
             >
               {strCategory}
             </button>))
       }
       {
-        pathname.includes('meals') ? <Meals /> : <Drinks />
+        (mealsCategory.length > 0 || drinksCategory.length > 0) && (
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ handleClickAll }
+          >
+            All
+          </button>)
+      }
+      {
+        pathname.includes('meals')
+          ? <Meals slicedMeals={ slicedMeals } />
+          : <Drinks slicedCocktails={ slicedCocktails } />
       }
       <Footer />
     </main>
