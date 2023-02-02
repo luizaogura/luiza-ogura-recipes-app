@@ -15,6 +15,7 @@ function Meals() {
       const data = await makeFetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
       setSlicedMeals(twelveMeals);
+      console.log(slicedMeals);
     }
     requestFetch();
 

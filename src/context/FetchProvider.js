@@ -61,6 +61,16 @@ function FetchProvider({ children }) {
     }
   };
 
+  const fetchIdMeals = (mealsId) => {
+    const urlIdMeals = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealsId}`;
+    makeFetch(urlIdMeals);
+  };
+
+  const fetchIdDrinks = (drinksId) => {
+    const urlIdDrinks = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${drinksId}`;
+    makeFetch(urlIdDrinks);
+  };
+
   const values = useMemo(() => ({
     errors,
     isLoading,
@@ -69,6 +79,8 @@ function FetchProvider({ children }) {
     dataMealsIngredient,
     dataMealsName,
     dataMealsFirstLetter,
+    fetchIdMeals,
+    fetchIdDrinks,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [errors, isLoading, dataMealsIngredient]);
 
