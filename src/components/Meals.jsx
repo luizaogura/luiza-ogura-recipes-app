@@ -1,41 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
 import RecipesContext from '../context/RecipesContext';
-// import useFetch from '../hooks/useFetch';
 
 function Meals({ slicedMeals }) {
-  // const { slicedMeals } = props;
   const { isLoading, errors, searchClick } = useContext(FetchContext);
-  // const { makeFetch } = useFetch();
-  // const [slicedMeals, setSlicedMeals] = useState({});
 
   const {
     filteredMealsCategory,
   } = useContext(RecipesContext);
-  useEffect(() => {
-    // async function fetchingStartRecipes(url) {
-    //   const LENGTH_TWELVE = 12;
-    //   const data = await makeFetch(url);
-    //   if (url.includes('meal')) {
-    //     const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
-    //     setSlicedMeals(twelveMeals);
-    //   } else {
-    //     const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
-    //     setSlicedCocktails(twelveMeals);
-    //   }
-    // }
-    // fetchingStartRecipes('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    // async function fetchingStartMeals() {
-    //   const LENGTH_TWELVE = 12;
-    //   const data = await makeFetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    //   const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
-    //   setSlicedMeals(twelveMeals);
-    // }
-    // fetchingStartMeals();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   console.log(searchClick);
   return (
     <div>

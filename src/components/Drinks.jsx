@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
 import RecipesContext from '../context/RecipesContext';
@@ -11,29 +11,6 @@ function Drinks({ slicedCocktails }) {
   const {
     filteredCocktailsCategory,
   } = useContext(RecipesContext);
-
-  useEffect(() => {
-    // async function fetchingStartRecipes(url) {
-    //   const LENGTH_TWELVE = 12;
-    //   const data = await makeFetch(url);
-    //   if (url.includes('meal')) {
-    //     const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
-    //     setSlicedMeals(twelveMeals);
-    //   } else {
-    //     const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
-    //     setSlicedCocktails(twelveMeals);
-    //   }
-    // }
-    // fetchingStartRecipes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    // async function fetchingStarDrinks() {
-    //   const LENGTH_TWELVE = 12;
-    //   const data = await makeFetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    //   const twelveCocktails = data.drinks.splice(0, LENGTH_TWELVE);
-    //   setSlicedCocktails(twelveCocktails);
-    // }
-    // fetchingStarDrinks();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div>
