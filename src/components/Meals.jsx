@@ -45,15 +45,17 @@ function Meals({ slicedMeals }) {
       }
       {
         filteredMealsCategory.length > 0
-          ? filteredMealsCategory.map(({ strMeal, strMealThumb, idMeal }) => (
+          ? filteredMealsCategory.map(({ strMeal, strMealThumb, idMeal }, index) => (
             <div
+              data-testid={ `${index}-recipe-card` }
               key={ idMeal }
             >
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
+                data-testid={ `${index}-card-img` }
               />
-              <p>{strMeal}</p>
+              <p data-testid={ `${index}-card-name` }>{strMeal}</p>
             </div>
           )) : slicedMeals.length > 0 && (
             slicedMeals.map(({ strMealThumb, strMeal }, index) => (

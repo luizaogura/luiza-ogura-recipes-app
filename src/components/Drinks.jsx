@@ -44,17 +44,21 @@ function Drinks({ slicedCocktails }) {
       }
       {
         filteredCocktailsCategory.length > 0
-          ? filteredCocktailsCategory.map(({ strDrink, strDrinkThumb, idDrink }) => (
-            <div
-              key={ idDrink }
-            >
-              <img
-                src={ strDrinkThumb }
-                alt={ strDrink }
-              />
-              <p>{strDrink}</p>
-            </div>
-          ))
+          ? filteredCocktailsCategory.map(
+            ({ strDrink, strDrinkThumb, idDrink }, index) => (
+              <div
+                data-testid={ `${index}-recipe-card` }
+                key={ idDrink }
+              >
+                <img
+                  src={ strDrinkThumb }
+                  alt={ strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+              </div>
+            ),
+          )
           : slicedCocktails.length > 0 && (
             slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
               <div data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
