@@ -37,13 +37,13 @@ function RecipesProvider({ children }) {
     switch (name) {
     case 'categoryButtonMeals': {
       const data = await makeFetch(urlMealsCategory);
-      const twelveMeals = data.meals.splice(0, LENGTH_TWELVE);
+      const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
       setFilteredMealsCategory(twelveMeals);
       break;
     }
     case 'categoryButtonDrinks': {
       const data = await makeFetch(urlDrinksCategory);
-      const twelveCocktails = data.drinks.splice(0, LENGTH_TWELVE);
+      const twelveCocktails = data.drinks.slice(0, LENGTH_TWELVE);
       setFilteredCocktailsCategory(twelveCocktails);
       break;
     }

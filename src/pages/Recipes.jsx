@@ -27,20 +27,6 @@ function Recipes() {
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    async function fetchingStartRecipes(url) {
-      const LENGTH_TWELVE = 12;
-      const data = await makeFetch(url);
-      if (url.includes('meal')) {
-        const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
-        setSlicedMeals(twelveMeals);
-      } else {
-        const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
-        setSlicedCocktails(twelveMeals);
-      }
-    }
-    fetchingStartRecipes('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    fetchingStartRecipes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-
     async function fetchingRecipesCategory(url) {
       setIsLoading(true);
       const LENGTH_FIVE = 5;
@@ -52,11 +38,26 @@ function Recipes() {
         const fiveDrinks = data.drinks.slice(0, LENGTH_FIVE);
         setDrinksCategory(fiveDrinks);
       }
-
       setIsLoading(false);
     }
+
     fetchingRecipesCategory('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     fetchingRecipesCategory('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    async function fetchingStartRecipes(url) {
+      setIsLoading(true);
+      const LENGTH_TWELVE = 12;
+      const data = await makeFetch(url);
+      if (url.includes('meal')) {
+        const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
+        setSlicedMeals(twelveMeals);
+      } else {
+        const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
+        setSlicedCocktails(twelveMeals);
+      }
+      setIsLoading(false);
+    }
+    fetchingStartRecipes('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    fetchingStartRecipes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
   }, []);
 
   return (
