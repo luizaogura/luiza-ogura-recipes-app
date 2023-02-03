@@ -15,6 +15,21 @@
   max-height: 80vh;
 }
 
+.carousel {
+  align-items: center;
+  background: #0fa36b;
+  color: #464646;
+  display: block;
+  margin-top: 100px;
+  max-width: 100;
+  scroll-behavior: smooth;
+}
+
+.startBtn {
+  bottom: 0;
+  position: fixed;
+}
+
 /*
 #iceLeft {
   animation: clink .8s infinite ease;
