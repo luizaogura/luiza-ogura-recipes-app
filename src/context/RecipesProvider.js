@@ -8,6 +8,7 @@ function RecipesProvider({ children }) {
   const { makeFetch } = useFetch();
   const {
     setFilteredMealsCategory,
+    setFilteredCocktailsCategory,
   } = useContext(FetchContext);
 
   const [isChecked, setIsChecked] = useState(false);
@@ -48,19 +49,11 @@ function RecipesProvider({ children }) {
   };
 
   const values = useMemo(() => ({
-    // mealsCategory,
-    // drinksCategory,
     handleClick,
-    // filteredMealsCategory,
-    filteredCocktailsCategory,
     handleClickAll,
     isChecked,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
-    // mealsCategory,
-    // drinksCategory,
-    // filteredMealsCategory,
-    filteredCocktailsCategory,
     isChecked,
   ]);
 
