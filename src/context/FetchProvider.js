@@ -16,7 +16,9 @@ function FetchProvider({ children }) {
     searchDrinksName: [],
     searchDrinksFirstLetter: [],
   });
-  const [searchClick, setSearchClick] = useState(false);
+
+  const [filteredMealsCategory, setFilteredMealsCategory] = useState([]);
+  const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
 
   const fetchingSearchBar = async ({ searchInput, typeSearch }, searchType) => {
     switch (typeSearch) {
@@ -64,18 +66,23 @@ function FetchProvider({ children }) {
   };
 
   useEffect(() => {
+    const LENGTH_TWELVE = 12;
     switch (location.pathname) {
     case '/meals':
       Object.keys(dataSearchBar).map((element) => (
         dataSearchBar[element].length === 1
           ? history.push(`/meals/${dataSearchBar[element][0].idMeal}`)
-          : setSearchClick(true)));
+          : setFilteredMealsCategory(
+            Object.values(dataSearchBar[element]).slice(0, LENGTH_TWELVE),
+          )));
       break;
     case '/drinks':
       Object.keys(dataSearchBar).map((element) => (
         dataSearchBar[element].length === 1
           ? history.push(`/drinks/${dataSearchBar[element][0].idDrink}`)
-          : setSearchClick(true)));
+          : setFilteredCocktailsCategory(
+            Object.values(dataSearchBar[element]).slice(0, LENGTH_TWELVE),
+          )));
       break;
     default:
       console.log('Favor renderizar apenas em /meals ou /drinks');
@@ -88,9 +95,18 @@ function FetchProvider({ children }) {
     fetchingSearchBar,
     dataSearchBar,
     setDataSearchBar,
-    searchClick,
+    filteredMealsCategory,
+    setFilteredMealsCategory,
+    filteredCocktailsCategory,
+    setFilteredCocktailsCategory,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [errors, isLoading, dataSearchBar, searchClick]);
+  }), [
+    errors,
+    isLoading,
+    dataSearchBar,
+    filteredMealsCategory,
+    filteredCocktailsCategory,
+  ]);
 
   return (
     <FetchContext.Provider value={ values }>

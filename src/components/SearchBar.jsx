@@ -29,8 +29,6 @@ function SearchBar() {
       break;
     case '/drinks':
       fetchingSearchBar(searchParams, 'cocktail');
-      Object.keys(dataSearchBar).filter((element) => (
-        console.log('elements', element.includes('Drink'))));
       break;
     default:
       console.log(
