@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import FetchContext from '../context/FetchContext';
 
 function SearchBar() {
-  const history = useHistory();
   const [searchParams, setSearchParams] = useState({
     searchInput: '',
     typeSearch: '',
@@ -11,11 +10,9 @@ function SearchBar() {
   const {
     fetchingSearchBar,
     dataSearchBar,
-    setDataSearchBar,
   } = useContext(FetchContext);
   console.log(dataSearchBar);
   const location = useLocation();
-  const [searchClick, setSearchClick] = useState(false);
   // const [mealOrDrink, setMealOrDrink] = useState('');
 
   const handleChange = ({ target: { name, value } }) => {
@@ -29,19 +26,11 @@ function SearchBar() {
     switch (location.pathname) {
     case '/meals':
       fetchingSearchBar(searchParams, 'meal');
-      Object.keys(dataSearchBar).map((element) => (
-        dataSearchBar[element].length === 1
-          ? history.push(`/meals/${dataSearchBar[element][0].idMeal}`)
-          : setSearchClick(true)));
-      setDataSearchBar({});
       break;
     case '/drinks':
       fetchingSearchBar(searchParams, 'cocktail');
-      Object.keys(dataSearchBar).map((element) => (
-        dataSearchBar[element].length === 1
-          ? history.push(`/meals/${dataSearchBar[element][0].idMeal}`)
-          : setSearchClick(true)));
-      setDataSearchBar({});
+      Object.keys(dataSearchBar).filter((element) => (
+        console.log('elements', element.includes('Drink'))));
       break;
     default:
       console.log(
@@ -103,7 +92,6 @@ function SearchBar() {
       >
         SEARCH
       </button>
-      <p>{searchClick}</p>
     </div>
   );
 }

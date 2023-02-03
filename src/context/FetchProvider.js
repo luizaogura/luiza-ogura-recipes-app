@@ -1,11 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import FetchContext from './FetchContext';
 import useFetch from '../hooks/useFetch';
 
 function FetchProvider({ children }) {
-  // const history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
   const { errors, isLoading, makeFetch } = useFetch();
   const [dataSearchBar, setDataSearchBar] = useState({
     searchMealsIngredient: [],
@@ -15,6 +16,7 @@ function FetchProvider({ children }) {
     searchDrinksName: [],
     searchDrinksFirstLetter: [],
   });
+  const [searchClick, setSearchClick] = useState(false);
 
   const fetchingSearchBar = async ({ searchInput, typeSearch }, searchType) => {
     switch (typeSearch) {
@@ -61,14 +63,34 @@ function FetchProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    switch (location.pathname) {
+    case '/meals':
+      Object.keys(dataSearchBar).map((element) => (
+        dataSearchBar[element].length === 1
+          ? history.push(`/meals/${dataSearchBar[element][0].idMeal}`)
+          : setSearchClick(true)));
+      break;
+    case '/drinks':
+      Object.keys(dataSearchBar).map((element) => (
+        dataSearchBar[element].length === 1
+          ? history.push(`/drinks/${dataSearchBar[element][0].idDrink}`)
+          : setSearchClick(true)));
+      break;
+    default:
+      console.log('Favor renderizar apenas em /meals ou /drinks');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSearchBar]);
   const values = useMemo(() => ({
     errors,
     isLoading,
     fetchingSearchBar,
     dataSearchBar,
     setDataSearchBar,
+    searchClick,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [errors, isLoading, dataSearchBar]);
+  }), [errors, isLoading, dataSearchBar, searchClick]);
 
   return (
     <FetchContext.Provider value={ values }>
