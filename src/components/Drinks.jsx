@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
 
@@ -23,28 +24,32 @@ function Drinks({ slicedCocktails }) {
                 data-testid={ `${index}-recipe-card` }
                 key={ idDrink }
               >
-                <img
-                  src={ strDrinkThumb }
-                  alt={ strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+                <Link to={ `/drinks/${idDrink}` }>
+                  <img
+                    src={ strDrinkThumb }
+                    alt={ strDrink }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+                </Link>
               </div>
             ),
           )
           : slicedCocktails.length > 0 && (
-            slicedCocktails.map(({ strDrinkThumb, strDrink }, index) => (
+            slicedCocktails.map(({ strDrinkThumb, strDrink, idDrink }, index) => (
               <div data-testid={ `${index}-recipe-card` } key={ `${strDrink}${index}` }>
-                <img
-                  src={ strDrinkThumb }
-                  alt={ strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p
-                  data-testid={ `${index}-card-name` }
-                >
-                  {strDrink}
-                </p>
+                <Link to={ `/drinks/${idDrink}` }>
+                  <img
+                    src={ strDrinkThumb }
+                    alt={ strDrink }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p
+                    data-testid={ `${index}-card-name` }
+                  >
+                    {strDrink}
+                  </p>
+                </Link>
               </div>)))
       }
       {
