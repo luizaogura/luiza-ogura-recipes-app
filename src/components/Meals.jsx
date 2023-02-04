@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
 
 function Meals({ slicedMeals }) {
-  const { isLoading, errors, searchClick } = useContext(FetchContext);
+  const { isLoading, errors } = useContext(FetchContext);
 
   const {
     filteredMealsCategory,
   } = useContext(FetchContext);
 
-  console.log(searchClick);
+  // console.log(searchClick);
   return (
     <div>
       {

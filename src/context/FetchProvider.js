@@ -89,6 +89,7 @@ function FetchProvider({ children }) {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSearchBar]);
+
   const values = useMemo(() => ({
     errors,
     isLoading,

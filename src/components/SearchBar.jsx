@@ -9,9 +9,9 @@ function SearchBar() {
   });
   const {
     fetchingSearchBar,
-    dataSearchBar,
+    // dataSearchBar,
   } = useContext(FetchContext);
-  console.log(dataSearchBar);
+  // console.log(dataSearchBar);
   const location = useLocation();
   // const [mealOrDrink, setMealOrDrink] = useState('');
 
