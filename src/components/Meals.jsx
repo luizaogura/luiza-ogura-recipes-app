@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
 
@@ -8,7 +9,6 @@ function Meals({ slicedMeals }) {
   const {
     filteredMealsCategory,
   } = useContext(FetchContext);
-
   console.log(searchClick);
   return (
     <div>
@@ -24,26 +24,30 @@ function Meals({ slicedMeals }) {
               data-testid={ `${index}-recipe-card` }
               key={ idMeal }
             >
-              <img
-                src={ strMealThumb }
-                alt={ strMeal }
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{strMeal}</p>
-            </div>
-          )) : slicedMeals.length > 0 && (
-            slicedMeals.map(({ strMealThumb, strMeal }, index) => (
-              <div data-testid={ `${index}-recipe-card` } key={ `${strMeal}${index}` }>
+              <Link to={ `/meals/${idMeal}` }>
                 <img
                   src={ strMealThumb }
                   alt={ strMeal }
                   data-testid={ `${index}-card-img` }
                 />
-                <p
-                  data-testid={ `${index}-card-name` }
-                >
-                  {strMeal}
-                </p>
+                <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+              </Link>
+            </div>
+          )) : slicedMeals.length > 0 && (
+            slicedMeals.map(({ strMealThumb, strMeal, idMeal }, index) => (
+              <div data-testid={ `${index}-recipe-card` } key={ `${strMeal}${index}` }>
+                <Link to={ `/meals/${idMeal}` }>
+                  <img
+                    src={ strMealThumb }
+                    alt={ strMeal }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p
+                    data-testid={ `${index}-card-name` }
+                  >
+                    {strMeal}
+                  </p>
+                </Link>
               </div>)))
       }
       {

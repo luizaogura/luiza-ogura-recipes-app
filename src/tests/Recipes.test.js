@@ -58,6 +58,19 @@ describe('Verificar se no Recipes na rota Meals...', () => {
     expect(mealsIconEl).toBeInTheDocument();
     userEvent.click(mealsIconEl);
   });
+
+  test('Testa se é possível clicar nos botões de categoria', async () => {
+    const categoryBeef = await screen.findByRole('button', { name: /beef/i });
+    userEvent.click(categoryBeef);
+    const categoryBreakfast = await screen.findByRole('button', { name: /breakfast/i });
+    userEvent.click(categoryBreakfast);
+    const categoryChicken = await screen.findByRole('button', { name: /chicken/i });
+    userEvent.click(categoryChicken);
+    const categoryDessert = await screen.findByRole('button', { name: /dessert/i });
+    userEvent.click(categoryDessert);
+    const categoryGoat = await screen.findByRole('button', { name: /goat/i });
+    userEvent.click(categoryGoat);
+  });
 });
 
 describe('Verificar se no Recipes na rota Drinks...', () => {
@@ -78,5 +91,18 @@ describe('Verificar se no Recipes na rota Drinks...', () => {
     expect(categoryOther).toBeInTheDocument();
     const categoryCocoa = await screen.findByRole('button', { name: /cocoa/i });
     expect(categoryCocoa).toBeInTheDocument();
+  });
+
+  test('Testa se é possível clicar nos botões de categoria', async () => {
+    const categoryOrdinaryDrink = await screen.findByRole('button', { name: /ordinary/i });
+    userEvent.click(categoryOrdinaryDrink);
+    const categoryCocktail = await screen.findByRole('button', { name: /cocktail/i });
+    userEvent.click(categoryCocktail);
+    const categoryShake = await screen.findByRole('button', { name: /shake/i });
+    userEvent.click(categoryShake);
+    const categoryOther = await screen.findByRole('button', { name: /other/i });
+    userEvent.click(categoryOther);
+    const categoryCocoa = await screen.findByRole('button', { name: /cocoa/i });
+    userEvent.click(categoryCocoa);
   });
 });
