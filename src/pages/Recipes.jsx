@@ -53,6 +53,7 @@ function Recipes() {
       } else {
         const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
         setSlicedCocktails(twelveMeals);
+        console.log(slicedCocktails);
       }
       setIsLoading(false);
     }
