@@ -21,9 +21,9 @@ function FavoriteRecipes() {
     // console.log(recipes);
     // localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
     const recipeFavorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    if (!recipeFavorites) {
-      return localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-    }
+    // if (!recipeFavorites) {
+    //   return localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    // }
     return setFavorites(recipeFavorites);
   }, []);
 
