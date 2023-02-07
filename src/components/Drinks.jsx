@@ -2,16 +2,12 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
-import RecipesContext from '../context/RecipesContext';
-// import useFetch from '../hooks/useFetch';
 
 function Drinks({ slicedCocktails }) {
   const { isLoading, errors } = useContext(FetchContext);
-  // const { makeFetch } = useFetch();
-  // const [slicedCocktails, setSlicedCocktails] = useState({});
   const {
     filteredCocktailsCategory,
-  } = useContext(RecipesContext);
+  } = useContext(FetchContext);
 
   return (
     <div>
