@@ -18,10 +18,10 @@ describe('Testando o componente FavoriteRecipes...', () => {
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorageMock));
   });
 
-  // afterEach(() => {
-  //   window.localStorage.clear();
-  // });
-  test('Se existe elementos na tela e clicar em filtro de categoria', () => {
+  afterEach(() => {
+    window.localStorage.clear();
+  });
+  test('Se existe elementos na tela e clicar em filtro de categoria meal', () => {
     renderWithRouter(<FavoriteRecipes />);
     const titleHeader = screen.getByTestId(TITLE_HEADER);
     const buttonAll = screen.getByTestId(ALL);
@@ -41,12 +41,40 @@ describe('Testando o componente FavoriteRecipes...', () => {
     const figDrink = screen.getByRole('img', { name: /at&t/i });
     expect(figDrink).toBeInTheDocument();
   });
-  test('Se existe elementos na tela e clicar em filtro de categoria', () => {
+  test('Testando o clicar em filtro de categoria drink', () => {
     renderWithRouter(<FavoriteRecipes />);
+    const buttonDrink = screen.getByTestId(FILTER_DRINKS_CATEGORY);
+
+    userEvent.click(buttonDrink);
+
+    const figDrink = screen.getByRole('img', { name: /at&t/i });
+    expect(figDrink).toBeInTheDocument();
+  });
+  test('testando botão de compartilhar', () => {
+    renderWithRouter(<FavoriteRecipes />);
+    JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    const mockedTextClipBoard = jest.fn();
+
+    navigator.clipboard = {
+      writeText: mockedTextClipBoard,
+    };
+
     const buttonShared = screen.getByTestId('0-horizontal-share-btn');
 
-    // userEvent.click(buttonShared);
+    userEvent.click(buttonShared);
+    expect(mockedTextClipBoard).toHaveBeenCalledTimes(1);
   //   const messageLink = screen.getByText(/link copied!/i);
   //   expect(messageLink).toBeInTheDocument();
+  });
+  test('testando botão de favoritar', () => {
+    renderWithRouter(<FavoriteRecipes />);
+    // JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    const buttonFavorite = screen.getByTestId('1-horizontal-favorite-btn');
+
+    userEvent.click(buttonFavorite);
+    const figCorba = screen.getByRole('img', { name: /corba/i });
+    expect(figCorba).toBeInTheDocument();
   });
 });
