@@ -50,10 +50,11 @@ function Recipes() {
       if (url.includes('meal')) {
         const twelveMeals = data.meals.slice(0, LENGTH_TWELVE);
         setSlicedMeals(twelveMeals);
+        console.log(slicedMeals);
       } else {
         const twelveMeals = data.drinks.slice(0, LENGTH_TWELVE);
         setSlicedCocktails(twelveMeals);
-        console.log(slicedCocktails);
+        // console.log(slicedCocktails);
       }
       setIsLoading(false);
     }
