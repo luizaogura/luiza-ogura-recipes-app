@@ -12,9 +12,9 @@ describe('Testando o componente SearchBar...', () => {
   const inputEmailEl = screen.getByTestId('email-input');
   const inputPasswordEl = screen.getByTestId('password-input');
   const inputButtonEl = screen.getByRole('button', { name: /enter/i });
-  const iconSearch = screen.getByTestId('search-input');
-  const buttonSearch = screen.getByTestId('exec-search-btn');
-  const radioButtonIngredient = screen.getByTestId('ingredient-search-radio');
+  // const iconSearch = screen.getByTestId('search-input');
+  // const buttonSearch = screen.getByTestId('exec-search-btn');
+  // const radioButtonIngredient = screen.getByTestId('ingredient-search-radio');
   beforeEach(async () => {
     jest.clearAllMocks();
   });
