@@ -1,7 +1,7 @@
 import drinksByIngredient from '../../../cypress/mocks/drinksByIngredient';
 import mealsByIngredient from '../../../cypress/mocks/mealsByIngredient';
-import drinks from '../mocks/drinks';
 import oneDrinkLetter from '../mocks/oneDrinkLetter';
+import drinks from '../../../cypress/mocks/drinks';
 
 export const makeMockFetch = () => {
   global.fetch = jest.fn()
