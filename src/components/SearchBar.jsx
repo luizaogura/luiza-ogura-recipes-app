@@ -9,11 +9,8 @@ function SearchBar() {
   });
   const {
     fetchingSearchBar,
-    // dataSearchBar,
   } = useContext(FetchContext);
-  // console.log(dataSearchBar);
   const location = useLocation();
-  // const [mealOrDrink, setMealOrDrink] = useState('');
 
   const handleChange = ({ target: { name, value } }) => {
     setSearchParams({
@@ -23,18 +20,21 @@ function SearchBar() {
   };
 
   const fetchSubmit = () => {
-    switch (location.pathname) {
-    case '/meals':
+    if (location.pathname.includes('meals')) {
       fetchingSearchBar(searchParams, 'meal');
-      break;
-    case '/drinks':
+    } if (location.pathname.includes('drinks')) {
       fetchingSearchBar(searchParams, 'cocktail');
-      break;
-    default:
-      console.log(
-        'Favor renderizar apenas em /meals ou /drinks',
-      );
     }
+    // switch (location.pathname) {
+    // case '/meals':
+    //   fetchingSearchBar(searchParams, 'meal');
+    //   break;
+    // case '/drinks':
+    //   fetchingSearchBar(searchParams, 'cocktail');
+    //   break;
+    // default:
+    //   history.push('/xablau');
+    // }
   };
 
   return (

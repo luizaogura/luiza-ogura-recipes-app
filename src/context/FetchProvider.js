@@ -24,6 +24,7 @@ function FetchProvider({ children }) {
     switch (typeSearch) {
     case 'ingredient': {
       const dataIngredient = await makeFetch(`https://www.the${searchType}db.com/api/json/v1/1/filter.php?i=${searchInput}`);
+      // console.log('dataIngredient', dataIngredient);
       if (searchType.includes('meal')) {
         setDataSearchBar({
           searchMealsIngredient: dataIngredient.meals,
