@@ -30,14 +30,8 @@ describe('Testando o componente SearchBar em Meals', () => {
     const searchExecButton = screen.getByTestId('exec-search-btn');
     userEvent.click(searchExecButton);
 
-    // const loadingSearchBar = screen.getByText(/loading/i);
-    // expect(loadingSearchBar).toBeInTheDocument();
-
     const brownStewChicken = await screen.findByRole('img', { name: /brown stew chicken/i });
     expect(brownStewChicken).toBeInTheDocument();
-
-    // await waitFor(() => {
-    //   expect(jest.spyOn(global, 'fetch').mockImplementation()).toBeCalled();
-    // });
+    jest.resetAllMocks();
   });
 });

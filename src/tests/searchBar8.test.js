@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/react';
 import { renderWithRouter } from './helpers/renderWithRouter';
 import App from '../App';
-import meals from './mocks/meals';
+import meals from '../../cypress/mocks/meals';
 // import drinksByIngredient from '../../cypress/mocks/drinksByIngredient';
 
 describe('Testando o componente SearchBar em Drinks', () => {
