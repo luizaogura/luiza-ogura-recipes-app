@@ -37,11 +37,15 @@ function FetchProvider({ children }) {
       break;
     }
     case 'name': {
-      const dataName = await makeFetch(`https://www.the${searchType}db.com/api/json/v1/1/search.php?s=${searchInput}`);
-      if (searchType === 'meal') {
-        setDataSearchBar({ searchMealsName: dataName.meals });
-      } else {
-        setDataSearchBar({ searchDrinksName: dataName.drinks });
+      try {
+        const dataName = await makeFetch(`https://www.the${searchType}db.com/api/json/v1/1/search.php?s=${searchInput}`);
+        if (searchType === 'meal') {
+          setDataSearchBar({ searchMealsName: dataName.meals });
+        } else {
+          setDataSearchBar({ searchDrinksName: dataName.drinks });
+        }
+      } catch (error) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
       break;
     }
