@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-// import Header from '../components/Header';
+import Header from '../components/Header';
 import CardDoneRecipes from '../components/CardDoneRecipes';
 
 function DoneRecipes() {
@@ -27,7 +27,7 @@ function DoneRecipes() {
 
   return (
     <div>
-
+      <Header />
       <button
         data-testid="filter-by-all-btn"
         name="clear"
