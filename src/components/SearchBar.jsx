@@ -7,8 +7,13 @@ function SearchBar() {
     searchInput: '',
     typeSearch: '',
   });
-  const { fetchingMeal, fetchingCocktail } = useContext(FetchContext);
+  const {
+    fetchingSearchBar,
+    // dataSearchBar,
+  } = useContext(FetchContext);
+  // console.log(dataSearchBar);
   const location = useLocation();
+  // const [mealOrDrink, setMealOrDrink] = useState('');
 
   const handleChange = ({ target: { name, value } }) => {
     setSearchParams({
@@ -17,26 +22,14 @@ function SearchBar() {
     });
   };
 
-  const fetchSubmit = async () => {
+  const fetchSubmit = () => {
     switch (location.pathname) {
-    case '/meals': {
-      try {
-        const responseApiMeal = await fetchingMeal(searchParams);
-        console.log(responseApiMeal);
-      } catch (err) {
-        console.log(err);
-      }
+    case '/meals':
+      fetchingSearchBar(searchParams, 'meal');
       break;
-    }
-    case '/drinks': {
-      try {
-        const responseApiDrinks = await fetchingCocktail(searchParams);
-        console.log(responseApiDrinks);
-      } catch (err) {
-        console.log(err);
-      }
+    case '/drinks':
+      fetchingSearchBar(searchParams, 'cocktail');
       break;
-    }
     default:
       console.log(
         'Favor renderizar apenas em /meals ou /drinks',

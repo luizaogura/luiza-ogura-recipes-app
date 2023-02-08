@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FetchContext from '../context/FetchContext';
-import RecipesContext from '../context/RecipesContext';
 
 function Meals({ slicedMeals }) {
-  const { isLoading, errors, searchClick } = useContext(FetchContext);
+  const { isLoading, errors } = useContext(FetchContext);
 
   const {
     filteredMealsCategory,
-  } = useContext(RecipesContext);
-  console.log(slicedMeals);
-  console.log(searchClick);
+  } = useContext(FetchContext);
+
+  // console.log(searchClick);
   return (
     <div>
       {

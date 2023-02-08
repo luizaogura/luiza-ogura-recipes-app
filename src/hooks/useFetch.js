@@ -18,7 +18,10 @@ function useFetch() {
       }
 
       const json = await response.json();
-      // console.log(json);
+      if (json.meals === null || json.drinks === null) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+
       return json;
     } catch (error) {
       setErrors(error);
