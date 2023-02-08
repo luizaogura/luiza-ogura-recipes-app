@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-// import Slider from 'react-slick';
+import { Carousel } from 'react-bootstrap';
 import useFetch from '../hooks/useFetch';
+import FavoriteBtn from './FavoriteBtn';
+import ShareBtn from './ShareBtn';
 import StartBtn from './StartBtn';
 
 function RecipeDetails() {
@@ -53,14 +55,6 @@ function RecipeDetails() {
         : arrayOfElements), []);
   console.log(ingredientes);
 
-  /* const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-  }; */
-
   useEffect(() => {
     fetchRecipe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,6 +68,8 @@ function RecipeDetails() {
         )
       }
       <div>
+        <FavoriteBtn />
+        <ShareBtn />
         { mealRecipe
           ? (
             <div>
@@ -129,23 +125,37 @@ function RecipeDetails() {
         />
       </div>
       <div>
-        { mealRecipe
-          ? recomendation.map(({ strDrink, idDrink }, index) => (
-            <div
-              data-testid={ `${index}-recommendation-card` }
-              key={ idDrink }
-            >
-              <p data-testid={ `${index}-recommendation-title` }>{strDrink}</p>
-            </div>
-          ))
-          : recomendation.map(({ strMeal, idMeal }, index) => (
-            <div
-              data-testid={ `${index}-recommendation-card` }
-              key={ idMeal }
-            >
-              <p data-testid={ `${index}-recommendation-title` }>{strMeal}</p>
-            </div>
-          ))}
+        <Carousel>
+          { mealRecipe
+            ? recomendation.map(({ strDrink, idDrink }, index) => (
+              <Carousel.Item key={ index }>
+                <div
+                  key={ idDrink }
+                  data-testid={ `${index}-recommendation-card` }
+                >
+                  <h1
+                    data-testid={ `${idDrink}-recommendation-title` }
+                  >
+                    { strDrink }
+                  </h1>
+                </div>
+              </Carousel.Item>
+            ))
+            : recomendation.map(({ strMeal, idMeal }, index) => (
+              <Carousel.Item key={ index }>
+                <div
+                  key={ idMeal }
+                  data-testid={ `${index}-recommendation-card` }
+                >
+                  <h1
+                    data-testid={ `${idMeal}-recommendation-title` }
+                  >
+                    { strMeal }
+                  </h1>
+                </div>
+              </Carousel.Item>
+            ))}
+        </Carousel>
       </div>
       <StartBtn />
     </div>
