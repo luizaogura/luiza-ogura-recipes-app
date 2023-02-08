@@ -1,15 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 import useFetch from '../hooks/useFetch';
+import FetchContext from './FetchContext';
 
 function RecipesProvider({ children }) {
   const { makeFetch } = useFetch();
-  // const [mealsCategory, setMealsCategory] = useState([]);
-  // const [drinksCategory, setDrinksCategory] = useState([]);
-  const [filteredMealsCategory, setFilteredMealsCategory] = useState([]);
-
-  const [filteredCocktailsCategory, setFilteredCocktailsCategory] = useState([]);
+  const {
+    setFilteredMealsCategory,
+    setFilteredCocktailsCategory,
+  } = useContext(FetchContext);
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -49,19 +49,11 @@ function RecipesProvider({ children }) {
   };
 
   const values = useMemo(() => ({
-    // mealsCategory,
-    // drinksCategory,
     handleClick,
-    filteredMealsCategory,
-    filteredCocktailsCategory,
     handleClickAll,
     isChecked,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
-    // mealsCategory,
-    // drinksCategory,
-    filteredMealsCategory,
-    filteredCocktailsCategory,
     isChecked,
   ]);
 
