@@ -26,8 +26,14 @@ function RecipeDetails() {
 
       const urlRecomendation = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const { drinks } = await makeFetch(urlRecomendation);
-      const sixRecomendation = drinks.slice(0, LENGTH_SIX);
-      setRecomendation(sixRecomendation);
+      const arrayRecomendation = drinks.slice(0, LENGTH_SIX);
+      const sixRecomendation = arrayRecomendation.map((recommend, index) => (
+        { ...recommend, recipeId: index }));
+      console.log(sixRecomendation);
+      const firstPart = [sixRecomendation[0], sixRecomendation[1]];
+      const secPart = [sixRecomendation[2], sixRecomendation[3]];
+      const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
+      setRecomendation([firstPart, secPart, thirdPart]);
     }
     if (location.pathname.includes('drinks')) {
       setMealRecipe(false);
@@ -37,8 +43,14 @@ function RecipeDetails() {
 
       const urlRecomendation = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const { meals } = await makeFetch(urlRecomendation);
-      const sixRecomendation = meals.slice(0, LENGTH_SIX);
-      setRecomendation(sixRecomendation);
+      const arrayRecomendation = meals.slice(0, LENGTH_SIX);
+      const sixRecomendation = arrayRecomendation.map((recommend, index) => (
+        { ...recommend, recipeId: index }));
+      console.log(sixRecomendation);
+      const firstPart = [sixRecomendation[0], sixRecomendation[1]];
+      const secPart = [sixRecomendation[2], sixRecomendation[3]];
+      const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
+      setRecomendation([firstPart, secPart, thirdPart]);
     }
   };
 
@@ -127,32 +139,36 @@ function RecipeDetails() {
       <div>
         <Carousel>
           { mealRecipe
-            ? recomendation.map(({ strDrink, idDrink }, index) => (
+            ? recomendation.map((recipes, index) => (
               <Carousel.Item key={ index }>
-                <div
-                  key={ idDrink }
-                  data-testid={ `${index}-recommendation-card` }
-                >
-                  <h1
-                    data-testid={ `${idDrink}-recommendation-title` }
+                {recipes.map((drink) => (
+                  <div
+                    key={ drink.idDrink }
+                    data-testid={ `${drink.recipeId}-recommendation-card` }
                   >
-                    { strDrink }
-                  </h1>
-                </div>
+                    <h1
+                      data-testid={ `${drink.recipeId}-recommendation-title` }
+                    >
+                      { drink.strDrink }
+                    </h1>
+                  </div>
+                ))}
               </Carousel.Item>
             ))
-            : recomendation.map(({ strMeal, idMeal }, index) => (
-              <Carousel.Item key={ index }>
-                <div
-                  key={ idMeal }
-                  data-testid={ `${index}-recommendation-card` }
-                >
-                  <h1
-                    data-testid={ `${idMeal}-recommendation-title` }
+            : recomendation.map((recipes2, index2) => (
+              <Carousel.Item key={ index2 }>
+                {recipes2.map((meal) => (
+                  <div
+                    key={ meal.idMeal }
+                    data-testid={ `${meal.recipeId}-recommendation-card` }
                   >
-                    { strMeal }
-                  </h1>
-                </div>
+                    <h1
+                      data-testid={ `${meal.recipeId}-recommendation-title` }
+                    >
+                      { meal.strMeal }
+                    </h1>
+                  </div>
+                ))}
               </Carousel.Item>
             ))}
         </Carousel>
