@@ -30,6 +30,8 @@ function Meals({ slicedMeals }) {
                   src={ strMealThumb }
                   alt={ strMeal }
                   data-testid={ `${index}-card-img` }
+                  height={ 200 }
+                  width={ 200 }
                 />
                 <p data-testid={ `${index}-card-name` }>{strMeal}</p>
               </Link>
@@ -42,6 +44,8 @@ function Meals({ slicedMeals }) {
                     src={ strMealThumb }
                     alt={ strMeal }
                     data-testid={ `${index}-card-img` }
+                    height={ 200 }
+                    width={ 200 }
                   />
                   <p
                     data-testid={ `${index}-card-name` }

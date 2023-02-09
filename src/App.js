@@ -12,6 +12,7 @@ import Recipes from './pages/Recipes';
 import RecipesProvider from './context/RecipesProvider';
 import RecipeDetails from './components/RecipeDetails';
 import RecipeInProgress from './pages/RecipesInProgress';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               path="/drinks/:id/in-progress"
               component={ RecipeInProgress }
             />
+            <Route path="*" component={ PageNotFound } />
           </Switch>
         </RecipesProvider>
       </FetchProvider>
