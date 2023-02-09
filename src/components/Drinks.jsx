@@ -29,6 +29,8 @@ function Drinks({ slicedCocktails }) {
                     src={ strDrinkThumb }
                     alt={ strDrink }
                     data-testid={ `${index}-card-img` }
+                    height={ 200 }
+                    width={ 200 }
                   />
                   <p data-testid={ `${index}-card-name` }>{strDrink}</p>
                 </Link>
@@ -43,6 +45,8 @@ function Drinks({ slicedCocktails }) {
                     src={ strDrinkThumb }
                     alt={ strDrink }
                     data-testid={ `${index}-card-img` }
+                    height={ 200 }
+                    width={ 200 }
                   />
                   <p
                     data-testid={ `${index}-card-name` }
