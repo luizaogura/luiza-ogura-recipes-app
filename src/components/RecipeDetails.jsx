@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
 import useFetch from '../hooks/useFetch';
+import FavoriteBtn from './FavoriteBtn';
+import ShareBtn from './ShareBtn';
+import StartBtn from './StartBtn';
 
 function RecipeDetails() {
   const { makeFetch, isLoading } = useFetch();
@@ -8,20 +12,41 @@ function RecipeDetails() {
   const { id } = useParams();
   const [mealRecipe, setMealRecipe] = useState(true);
   const [recipeArray, setRecipeArray] = useState({});
-  console.log(recipeArray);
+  const [recomendation, setRecomendation] = useState([]);
 
   const fetchRecipe = async () => {
+    const LENGTH_SIX = 6;
     if (location.pathname.includes('meals')) {
       setMealRecipe(true);
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { meals } = await makeFetch(url);
       setRecipeArray(meals[0]);
+
+      const urlRecomendation = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const { drinks } = await makeFetch(urlRecomendation);
+      const arrayRecomendation = drinks.slice(0, LENGTH_SIX);
+      const sixRecomendation = arrayRecomendation.map((recommend, index) => (
+        { ...recommend, recipeId: index }));
+      const firstPart = [sixRecomendation[0], sixRecomendation[1]];
+      const secPart = [sixRecomendation[2], sixRecomendation[3]];
+      const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
+      setRecomendation([firstPart, secPart, thirdPart]);
     }
     if (location.pathname.includes('drinks')) {
       setMealRecipe(false);
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { drinks } = await makeFetch(url);
       setRecipeArray(drinks[0]);
+
+      const urlRecomendation = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const { meals } = await makeFetch(urlRecomendation);
+      const arrayRecomendation = meals.slice(0, LENGTH_SIX);
+      const sixRecomendation = arrayRecomendation.map((recommend, index) => (
+        { ...recommend, recipeId: index }));
+      const firstPart = [sixRecomendation[0], sixRecomendation[1]];
+      const secPart = [sixRecomendation[2], sixRecomendation[3]];
+      const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
+      setRecomendation([firstPart, secPart, thirdPart]);
     }
   };
 
@@ -36,7 +61,6 @@ function RecipeDetails() {
             { `${value} - ${recipeArray[`strMeasure${arrayOfElements.length + 1}`]}` }
           </li>)]
         : arrayOfElements), []);
-  console.log(ingredientes);
 
   useEffect(() => {
     fetchRecipe();
@@ -51,6 +75,8 @@ function RecipeDetails() {
         )
       }
       <div>
+        <FavoriteBtn />
+        <ShareBtn />
         { mealRecipe
           ? (
             <div>
@@ -105,6 +131,44 @@ function RecipeDetails() {
           }
         />
       </div>
+      <div>
+        <Carousel data-testid="recommendation-carousel">
+          { mealRecipe
+            ? recomendation.map((recipes, index) => (
+              <Carousel.Item key={ index }>
+                {recipes.map((drink) => (
+                  <div
+                    key={ drink.idDrink }
+                    data-testid={ `${drink.recipeId}-recommendation-card` }
+                  >
+                    <h1
+                      data-testid={ `${drink.recipeId}-recommendation-title` }
+                    >
+                      { drink.strDrink }
+                    </h1>
+                  </div>
+                ))}
+              </Carousel.Item>
+            ))
+            : recomendation.map((recipes2, index2) => (
+              <Carousel.Item key={ index2 }>
+                {recipes2.map((meal) => (
+                  <div
+                    key={ meal.idMeal }
+                    data-testid={ `${meal.recipeId}-recommendation-card` }
+                  >
+                    <h1
+                      data-testid={ `${meal.recipeId}-recommendation-title` }
+                    >
+                      { meal.strMeal }
+                    </h1>
+                  </div>
+                ))}
+              </Carousel.Item>
+            ))}
+        </Carousel>
+      </div>
+      <StartBtn />
     </div>
   );
 }
