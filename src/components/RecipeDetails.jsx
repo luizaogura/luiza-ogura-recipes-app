@@ -13,8 +13,6 @@ function RecipeDetails() {
   const [mealRecipe, setMealRecipe] = useState(true);
   const [recipeArray, setRecipeArray] = useState({});
   const [recomendation, setRecomendation] = useState([]);
-  console.log(recipeArray);
-  console.log(recomendation);
 
   const fetchRecipe = async () => {
     const LENGTH_SIX = 6;
@@ -29,7 +27,6 @@ function RecipeDetails() {
       const arrayRecomendation = drinks.slice(0, LENGTH_SIX);
       const sixRecomendation = arrayRecomendation.map((recommend, index) => (
         { ...recommend, recipeId: index }));
-      console.log(sixRecomendation);
       const firstPart = [sixRecomendation[0], sixRecomendation[1]];
       const secPart = [sixRecomendation[2], sixRecomendation[3]];
       const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
@@ -46,7 +43,6 @@ function RecipeDetails() {
       const arrayRecomendation = meals.slice(0, LENGTH_SIX);
       const sixRecomendation = arrayRecomendation.map((recommend, index) => (
         { ...recommend, recipeId: index }));
-      console.log(sixRecomendation);
       const firstPart = [sixRecomendation[0], sixRecomendation[1]];
       const secPart = [sixRecomendation[2], sixRecomendation[3]];
       const thirdPart = [sixRecomendation[4], sixRecomendation[5]];
@@ -65,7 +61,6 @@ function RecipeDetails() {
             { `${value} - ${recipeArray[`strMeasure${arrayOfElements.length + 1}`]}` }
           </li>)]
         : arrayOfElements), []);
-  console.log(ingredientes);
 
   useEffect(() => {
     fetchRecipe();
@@ -137,7 +132,7 @@ function RecipeDetails() {
         />
       </div>
       <div>
-        <Carousel>
+        <Carousel data-testid="recommendation-carousel">
           { mealRecipe
             ? recomendation.map((recipes, index) => (
               <Carousel.Item key={ index }>

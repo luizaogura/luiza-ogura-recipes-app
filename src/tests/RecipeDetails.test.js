@@ -29,10 +29,26 @@ describe('Verificar o RecipeDetails na rota Meals...', () => {
     expect(video).toBeInTheDocument();
   });
 
+  test('Testa se tem as recomendações', async () => {
+    const recommendation = await screen.getByTestId('recommendation-carousel');
+    expect(recommendation).toBeInTheDocument();
+  });
+
   test('Tem o StartBtn e é possível clicar nele', () => {
     const startBtn = screen.getByTestId('start-recipe-btn');
     expect(startBtn).toBeInTheDocument();
     userEvent.click(startBtn);
+  });
+
+  test('Tem o FavoriteBtn e é possível clicar nele', () => {
+    const favBtn = screen.getByTestId('favorite-btn');
+    expect(favBtn).toBeInTheDocument();
+    userEvent.click(favBtn);
+  });
+
+  test('Tem o ShareBtn e é possível clicar nele', () => {
+    const shareBtn = screen.getByTestId('share-btn');
+    expect(shareBtn).toBeInTheDocument();
   });
 });
 
@@ -61,5 +77,16 @@ describe('Verificar o RecipeDetails na rota Drinks...', () => {
     const startBtn = screen.getByTestId('start-recipe-btn');
     expect(startBtn).toBeInTheDocument();
     userEvent.click(startBtn);
+  });
+
+  test('Tem o FavoriteBtn e é possível clicar nele', () => {
+    const favBtn = screen.getByTestId('favorite-btn');
+    expect(favBtn).toBeInTheDocument();
+    userEvent.click(favBtn);
+  });
+
+  test('Tem o ShareBtn e é possível clicar nele', () => {
+    const shareBtn = screen.getByTestId('share-btn');
+    expect(shareBtn).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import useLocalStorage from '../hooks/useLocalStorage';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -8,36 +9,31 @@ function FavoriteBtn() {
   const { makeFetch } = useFetch();
   const location = useLocation();
   const { id } = useParams();
-  const [favorite, setFavorite] = useState(false);
+  const {
+    isFavorite,
+    getLocalFavorite,
+    saveFavoriteRecipe,
+    removeFavoriteRecipe } = useLocalStorage();
 
   const checkLocalStorage = async () => {
-    const actualStorage = await JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    if (location.pathname.includes('meals')) {
-      setFavorite(actualStorage
-        .some((fav) => fav.idMeal === id));
-    } else if (location.pathname.includes('drinks')) {
-      setFavorite(actualStorage
-        .some((fav) => fav.idDrink === id));
-    }
+    getLocalFavorite(id);
   };
 
   const handleClick = async () => {
-    if (favorite === false && location.pathname.includes('meals')) {
+    if (!isFavorite && location.pathname.includes('meals')) {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { meals } = await makeFetch(url);
       const recipeArray = meals[0];
-      await localStorage.setItem('favoriteRecipes', JSON.stringify(recipeArray));
-      setFavorite(true);
+      saveFavoriteRecipe(0, recipeArray);
     }
-    if (favorite === false && location.pathname.includes('drinks')) {
+    if (!isFavorite && location.pathname.includes('drinks')) {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { drinks } = await makeFetch(url);
       const recipeArray = drinks[0];
-      await localStorage.setItem('favoriteRecipes', JSON.stringify(recipeArray));
-      setFavorite(true);
+      saveFavoriteRecipe(recipeArray);
     }
-    if (favorite === true) {
-      setFavorite(false);
+    if (isFavorite) {
+      removeFavoriteRecipe(id);
     }
   };
 
@@ -48,11 +44,11 @@ function FavoriteBtn() {
   return (
     <button
       type="button"
-      src={ favorite ? blackHeartIcon : whiteHeartIcon }
+      src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
       onClick={ handleClick }
       data-testid="favorite-btn"
     >
-      { favorite ? (<img src={ blackHeartIcon } alt="favoriteicon" />)
+      { isFavorite ? (<img src={ blackHeartIcon } alt="favoriteicon" />)
         : (<img src={ whiteHeartIcon } alt="favoriteicon" />) }
     </button>
   );

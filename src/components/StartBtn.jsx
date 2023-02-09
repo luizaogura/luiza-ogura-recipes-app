@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function StartBtn() {
   const { makeFetch } = useFetch();
@@ -9,12 +10,12 @@ function StartBtn() {
   const history = useHistory();
   const [type, setType] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(false);
-  const [started, setStarted] = useState(false);
+  const {
+    inProgress,
+    getLocalResponseProgress,
+    inProgressDrinks,
+    inProgressMeals } = useLocalStorage();
 
-  const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
-  const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-  console.log(inProgress);
-  console.log(id);
   console.log(type);
 
   const attFood = () => {
@@ -25,45 +26,35 @@ function StartBtn() {
     }
   };
 
-  const isDisabled = () => {
-    if (inProgress.length > 1 && type === 'meals') {
-      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const find = storage.some((key) => key.idMeal === id);
-      setStarted(find);
-    }
-
-    if (inProgress.length > 1 && type === 'drinks') {
-      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const find = storage.some((key) => key.idDrink === id);
-      setStarted(find);
-    }
-
-    if (doneRecipe) {
+  const checkInProgress = async () => {
+    getLocalResponseProgress(id);
+    const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipe > 0) {
       const find = doneRecipe.find((recipe) => recipe.id === pageId);
       return setBtnDisabled(find);
     }
   };
 
   const handleClick = async () => {
-    if (started === false && type === 'meals') {
+    if (!inProgress && type === 'meals') {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { meals } = await makeFetch(url);
       const recipeArray = meals[0];
-      await localStorage.setItem('inProgressRecipes', JSON.stringify(recipeArray));
+      inProgressMeals(id, recipeArray);
     }
-    if (started === false && type === 'drinks') {
+    if (!inProgress && type === 'drinks') {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const { drinks } = await makeFetch(url);
       const recipeArray = drinks[0];
-      await localStorage.setItem('inProgressRecipes', JSON.stringify(recipeArray));
+      inProgressDrinks(id, recipeArray);
     }
     history.push(`/${type}/${id}/in-progress`);
   };
 
   useEffect(() => {
     attFood();
-    isDisabled();
-  }, [started]);
+    checkInProgress();
+  }, []);
 
   return (
     <div>
@@ -74,7 +65,7 @@ function StartBtn() {
         disabled={ btnDisabled }
         onClick={ handleClick }
       >
-        { started ? 'Continue Recipe' : 'Start Recipe'}
+        { inProgress ? 'Continue Recipe' : 'Start Recipe'}
       </button>
     </div>
   );
