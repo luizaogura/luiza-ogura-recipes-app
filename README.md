@@ -1,4 +1,4 @@
-# Boas-vindas ao repositório do projeto App de Receitas!
+# Repositório do projeto App de Receitas!
 
 <details>
   <summary><strong>👨‍💻 O que foi desenvolvido</strong></summary><br />
