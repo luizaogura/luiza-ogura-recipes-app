@@ -1,5 +1,9 @@
 # Repositório do projeto App de Receitas!
 
+<center>
+  <img src="/project-demo.gif" alt="Project Demo">
+</center>
+
 <details>
   <summary><strong>👨‍💻 O que foi desenvolvido</strong></summary><br />
 
